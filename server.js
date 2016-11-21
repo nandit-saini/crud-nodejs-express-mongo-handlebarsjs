@@ -14,6 +14,6 @@ server.listen("8000");
 
 app.get("/",function(req,res){
 
-	res.sendFile(__dirname+"public/HomePage.html");
+	res.sendFile(__dirname+"/public/HomePage.html");
 
 });
