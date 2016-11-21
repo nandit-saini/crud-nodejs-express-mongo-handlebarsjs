@@ -1,10 +1,10 @@
 'use strict';
 
-var Company = require('../model/company').Company;
+var User = require('../model/user').User;
 
-/** create function to create Company. */
+/** create function to create User. */
 exports.create = function (req, res) {
-    Company.create(req.body, function(err, result) {
+    User.create(req.body, function(err, result) {
         if (!err) {
             return res.json(result);
         } else {
@@ -13,9 +13,9 @@ exports.create = function (req, res) {
     });
 };
 
-/** getCompany function to get Company by id. */
+/** getUser function to get User by id. */
 exports.get = function (req, res) {
-    Company.get({_id: req.params.id}, function(err, result) {
+    User.get({_id: req.params.id}, function(err, result) {
         if (!err) {
             return res.json(result);
         } else {
@@ -24,9 +24,9 @@ exports.get = function (req, res) {
     });
 };
 
-/** updateCompany function to get Company by id. */
+/** updateUser function to get User by id. */
 exports.update = function (req, res) {
-    Company.updateById(req.params.id, req.body, function(err, result) {
+    User.updateById(req.params.id, req.body, function(err, result) {
         if (!err) {
             return res.json(result);
         } else {
@@ -35,9 +35,9 @@ exports.update = function (req, res) {
     });
 }
 
-/** removeCompany function to get Company by id. */
+/** removeUser function to get User by id. */
 exports.delete = function (req, res) {
-    Company.removeById({_id: req.params.id}, function(err, result) {
+    User.removeById({_id: req.params.id}, function(err, result) {
         if (!err) {
             return res.json(result);
         } else {

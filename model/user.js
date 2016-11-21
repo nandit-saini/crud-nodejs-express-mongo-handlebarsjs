@@ -4,28 +4,28 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * @module company
- * @description contain the details of company information, conditions and actions.
+ * @module user
+ * @description contain the details of user information.
  */
 
-var CompanySchema = new Schema({
+var UserSchema = new Schema({
   name: { type: String },
-  numberOfEmployees: { type: Number }
+  email: { type: String }
 });
 
 
-CompanySchema.statics = {
+UserSchema.statics = {
 
      /**
-      findOnecompany. return the one company object.
-      @param id: get id to find one company by id.
+      findOneuser. return the one user object.
+      @param id: get id to find one user by id.
       @param callback: callback of this form.
     */
     get: function(query, callback) {
         this.findOne(query, callback);
     },
     /**
-      findcompany. return the company objects.
+      finduser. return the user objects.
       @param callback: callback of this form.
     */
     getAll: function(query, callback) {
@@ -33,8 +33,8 @@ CompanySchema.statics = {
     },
     
     /**
-      updatecompany. return the create company object result.
-      @param updateData: updateData is use to update company w.r.t id.
+      updateuser. return the create user object result.
+      @param updateData: updateData is use to update user w.r.t id.
       @param callback: callback of this form.
     */
     updateById: function(id, updateData, callback) {
@@ -44,14 +44,14 @@ CompanySchema.statics = {
         this.remove(removeData, callback);
     },
     create: function(data, callback) {
-        var company = new this(data);
-        company.save(callback);
+        var user = new this(data);
+        user.save(callback);
     }
 }
 
-var company = mongoose.model('company', CompanySchema);
+var user = mongoose.model('user', UserSchema);
 
 /** export schema */
 module.exports = {
-    Company: company
+    User: user
 };
