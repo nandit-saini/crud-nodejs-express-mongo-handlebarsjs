@@ -2,10 +2,108 @@
 <html>
 <head>
 	<title></title>
+
+	<link  rel="stylesheet" type="text/css" href="css/user_home.css" />	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-	<link  rel="stylesheet" type="text/css" href="css/user_home.css"></script>
-	<link  rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.min.css"></script>
+	<script type="text/javascript" src="js/home.js"></script>
+	
+	
+
+
+	<script id="create-template" type="text/x-handlebars-template">
+	  <h1>Create New User</h1>
+	  <form id="create_user_form">
+	  	<div class="form-group">
+	  		<label>Name</label>
+	  		<input class="form-control" type="text" name="name"/>
+	  	</div>
+	  	<div class="form-group">
+	  		<label>Email Id</label>
+	  		<input class="form-control" type="text" name="email"/>
+	  	</div>
+	  	<button class="btn btn-default">Add</button>
+	  </form>
+	</script>
+	<script id="edit-template" type="text/x-handlebars-template">
+		<div>
+			<a href="#" id="go_back">Go Back</a>
+		</div>
+		<form id="edit_user_form">
+			<input id="user_id" type="hidden" value="{{_id}}"> 
+		  	<div class="form-group">
+		  		<label>Name</label>
+		  		<input class="form-control" type="text" name="name" value="{{name}}" />
+		  	</div>
+		  	<div class="form-group">
+		  		<label>Email Id</label>
+		  		<input class="form-control" type="text" name="email" value="{{email}}" />
+		  	</div>
+		  	<button class="btn btn-default">Edit</button>
+	  	</form>
+	</script>
+	<script id="view-users" type="text/x-handlebars-template">
+	  <h1>User List</h1>
+	  <div>
+		  <div class="form-inline ">
+		  	<div class="form-group">
+			  	<label>Sort By:</label>
+			  	<select id="sort_by" class="form-control">
+			  		<option value="_id">Id</option>
+			  		<option value="name">Name</option>
+			  		<option value="email">Email</option>
+			  	</select>
+			</div>
+			<div class="form-group">
+			  	<label>Sort Order:</label>
+			  	<select id="sort_order" class="form-control">
+			  		<option value="1">Ascending</option>
+			  		<option value="-1">Descending</option>		  		
+			  	</select>
+			</div>
+
+			<div class="form-group">
+				<input class="form-control" type="text">
+				<button class="btn btn-primary">Filter</button>
+			</div>
+
+		  </div>
+		  <br/>
+		  <table class="table table-bordered">
+		  	<tr>		  		
+		  		<th>Name</th>
+		  		<th>Email</th>
+		  		<th>Action</th>	  		
+		  	</tr>
+		  	
+		  	{{#each records}}
+		  		<tr>
+			  		<td>{{name}}</td>
+			  		<td>{{email}}</td>	  		
+			  		<td>
+
+			  			<button class="btn btn-default edit_btn" data="{{_id}}">Edit</button>
+			  			<button class="btn btn-danger del_btn" data="{{_id}}">Delete</button>
+			  		</td>
+			  	</tr>
+
+		  	{{/each}}
+		  </table>
+		  <div class="text-center">
+		  	<ul class="pagination">
+			  {{#each pages}}
+			  	{{#check ../current_page this}}
+			  		<li class="active"><a href="#" class="page_no">{{this}}</a></li>  
+			  	{{else}}
+			  		<li><a href="#" class="page_no">{{this}}</a></li>  
+			  	{{/check}}
+			  {{/each}}
+			</ul>
+		  </div>
+		</div>
+	</script>
 </head>
 <body>
 	<nav class="navbar navbar-default  navbar-static">
@@ -38,15 +136,15 @@
 	<div class="container">
 		<div class="row row-eq-height">
 			<div class="col-md-3 row-eq-height">
-				<div class="crud">CRUD Operations</div>
-				<div class="view_users">View Users</div>
+				<div class="create side_tab">Create User</div>
+				<div class="view_users side_tab">View Users</div>
 			</div>
 			<div class="col-md-9 row-eq-height area">
 				
 			</div>
 		</div>
 		<div class="row">
-			<span class="error col-md-4 col-md-offset-4"></span>
+			<div class="error col-md-4 col-md-offset-4"></div>
 		</div>
 	</div>
 </body>

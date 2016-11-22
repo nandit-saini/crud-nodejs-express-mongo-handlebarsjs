@@ -31,6 +31,15 @@ UserSchema.statics = {
     getAll: function(query, callback) {
         this.find(query, callback);
     },
+
+    getAllCount: function(query, callback) {
+        this.count(query, callback);
+    },
+
+
+    getPageRecords: function(query, callback) {
+        this.find(null,null,query,callback);
+    },
     
     /**
       updateuser. return the create user object result.
