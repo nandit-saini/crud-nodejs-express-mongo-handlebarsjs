@@ -8,6 +8,7 @@ var User= require('./controller/user');
 
 
 app.use(express.static("public"));
+app.use(express.static("lib"));
 app.use(bodyParser.urlencoded({extended:false}));
 
 

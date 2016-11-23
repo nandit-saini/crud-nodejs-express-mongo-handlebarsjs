@@ -106,6 +106,7 @@ exports.delete = function (req, res) {
     });
 }
 
+/** Generate pagination array */
 function generatePageArray(page,size,total_pages)
 {
     var last_page = total_pages;
