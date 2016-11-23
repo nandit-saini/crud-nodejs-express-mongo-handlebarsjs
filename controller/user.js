@@ -3,8 +3,7 @@
 var User = require('../model/user').User;
 
 /** create function to create User. */
-exports.create = function (req, res) {
-  
+exports.create = function (req, res) {  
 
     User.create(req.body, function(err, result) {
         if (!err) {
@@ -19,45 +18,33 @@ exports.create = function (req, res) {
 /** getPage function to get User by page. */
 exports.getPage = function (req, res) {
 
-     var page = parseInt(req.params.page),
-         size = 5,
-         skip = page > 0 ? ((page - 1) * size) : 0;
+    var page = parseInt(req.params.page),
+     size = 5,
+     skip = page > 0 ? ((page - 1) * size) : 0;
 
-     var query = {skip: skip,limit: size}    
-     var sortby = req.query.sort_by;
-     var sortorder = req.query.sort_order;
+    var query = {skip: skip,limit: size}    
+    var sortby = req.query.sort_by;
+    var sortorder = req.query.sort_order;
 
-     console.log(sortby);
-     console.log(sortorder);
-     if(typeof sortby !='undefined' && typeof sortorder !='undefined')
+    if(typeof sortby !='undefined' && typeof sortorder !='undefined')
     {  
         var temp = {};
         temp[sortby] = sortorder;
         query.sort = temp;
     }
-    console.log(query);
+    
     User.getPageRecords(query, function(err, result) {
         
         if (!err) {
 
             User.getAllCount({},function(err,counter){
 
-                console.log(counter);
-                console.log(result);
-
                 var total_pages = Math.ceil(counter/size);
                 var page_list = generatePageArray(page,size,total_pages);
-
-                console.log(total_pages);
-                console.log(page_list);
-                
-                res.json({records:result,pages:page_list,current_page:page,sortby:sortby,sortorder:sortorder})
-
+                res.json({records:result,pages:page_list,current_page:page,sortby:sortby,sortorder:sortorder});
 
             });
-
-
-            // return res.json(result);
+            
         } else {
             return res.send(err); // 500 error
         }
@@ -67,7 +54,6 @@ exports.getPage = function (req, res) {
 /** getAll function to get all User. */
 exports.getAll = function (req, res) {
 
-   
     User.getAll({}, function(err, result) {
         if (!err) {
             return res.json(result);
@@ -80,7 +66,6 @@ exports.getAll = function (req, res) {
 /** get function to get all User. */
 exports.get = function (req, res) {
 
-   
     User.get({_id: req.params.id}, function(err, result) {
         if (!err) {
             return res.json(result);
@@ -93,7 +78,6 @@ exports.get = function (req, res) {
 /** updateUser function to get User by id. */
 exports.update = function (req, res) {
 
-    console.log(req.body)
     User.updateById(req.params.id, req.body, function(err, result) {
         if (!err) {
             return res.json(result);
@@ -105,6 +89,7 @@ exports.update = function (req, res) {
 
 /** removeUser function to get User by id. */
 exports.delete = function (req, res) {
+    
     User.removeById({_id: req.params.id}, function(err, result) {
         if (!err) {
            User.getAll({}, function(err, result) {
@@ -126,7 +111,6 @@ function generatePageArray(page,size,total_pages)
     var last_page = total_pages;
     var page_list = [];
     var current_page = page;
-
 
     if(total_pages<=7)
     {

@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var bodyParser = require('body-parser');
-var db = require('./config/db');
+var db = require('./database/db');
 var User= require('./controller/user');
 
 
@@ -15,7 +15,7 @@ server.listen("8000");
 
 app.get("/",function(req,res){
 
-	res.sendFile(__dirname+"/public/HomePage.html");
+	res.sendFile(__dirname+"/public/homepage.html");
 
 });
 
