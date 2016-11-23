@@ -18,8 +18,7 @@ $(document).ready(function(){
 			url:"/users/new",
 			type:"POST",
 			data:$(this).serialize()
-		}).done(function(data){			
-
+		}).done(function(data){	
 			
 			if(data._id)
 			{
@@ -40,8 +39,8 @@ $(document).ready(function(){
 		var sort_by = "_id";
 		var sort_order = 1;
 		var page_no = 1;
-
-		getUsersByPage (page_no,sort_by,sort_order);
+		var search_value = "";
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 	});
 
@@ -50,6 +49,7 @@ $(document).ready(function(){
 
 		var id = $(this).attr("data");
 		var self = $(this);
+		var search_value = $("#search_input").val();
 
 		$.ajax({
 
@@ -61,9 +61,8 @@ $(document).ready(function(){
 			var page_no = 1;
 			var sort_by = $("#sort_by").val();
 			var sort_order = $("#sort_order").val();
-
-			getUsersByPage (page_no,sort_by,sort_order);
-			
+			var search_value = $("#search_input").val();
+			getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 		});
 
@@ -82,7 +81,7 @@ $(document).ready(function(){
 
 			var tempVars = Handlebars.compile($("#edit-template").html());
 			var tempFinal = tempVars(data);
-			$(".area").html(tempFinal);		
+			$(".area").html(tempFinal);
 
 		});		
 
@@ -124,8 +123,8 @@ $(document).ready(function(){
 		var sort_by = "_id";
 		var sort_order = 1;
 		var page_no = 1;
-
-		getUsersByPage (page_no,sort_by,sort_order);
+		var search_value = "";
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 	});
 
@@ -134,16 +133,15 @@ $(document).ready(function(){
 	$("body").on("click",".page_no",function(e){
 
 		e.preventDefault();
-		
-
 		$(".page_no").parent().removeClass("active");
 		$(this).parent().addClass("active");
 		
 		var page_no = $(this).html();
 		var sort_by = $("#sort_by").val();
 		var sort_order = $("#sort_order").val();
+		var search_value = $("#search_input").val();
 
-		getUsersByPage (page_no,sort_by,sort_order);
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 	});
 
@@ -158,23 +156,37 @@ $(document).ready(function(){
 
 	});
 
+	//getting sorted results according to the sortorder
+
 	$("body").on("change","#sort_by",function(){
 
 		var sort_by = $("#sort_by").val();
 		var sort_order = $("#sort_order").val();
 		var page_no = 1;
-
-		getUsersByPage (page_no,sort_by,sort_order);
+		var search_value = $("#search_input").val();
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 	});
 
+	//getting sorted results according to the sortorder
 	$("body").on("change","#sort_order",function(){
 
 		var sort_by = $("#sort_by").val();
 		var sort_order = $("#sort_order").val();
 		var page_no = 1;
+		var search_value = $("#search_input").val();
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
-		getUsersByPage (page_no,sort_by,sort_order);
+	});
+
+
+	$("body").on("click",".filter_btn",function(){
+
+		var sort_by = $("#sort_by").val();
+		var sort_order = $("#sort_order").val();
+		var page_no = 1;
+		var search_value = $("#search_input").val();
+		getUsersByPage (page_no,sort_by,sort_order,search_value);
 
 	});
 
@@ -182,13 +194,13 @@ $(document).ready(function(){
 
 });
 
-function getUsersByPage (page_no,sort_by,sort_order) {
+function getUsersByPage (page_no,sort_by,sort_order,search_value) {
 	
 	$.ajax({
 
 		url:"/users/page/"+page_no,
 		type:"GET",
-		data:{sort_by:sort_by,sort_order:sort_order}				
+		data:{sort_by:sort_by,sort_order:sort_order,search_value:search_value}				
 
 	}).done(function(data){
 

@@ -37,8 +37,8 @@ UserSchema.statics = {
     },
 
 
-    getPageRecords: function(query, callback) {
-        this.find(null,null,query,callback);
+    getPageRecords: function(find_query,query, callback) {
+        this.find(find_query,'_id name email',query,callback);
     },
     
     /**

@@ -25,6 +25,7 @@ exports.getPage = function (req, res) {
     var query = {skip: skip,limit: size}    
     var sortby = req.query.sort_by;
     var sortorder = req.query.sort_order;
+    var search_value = req.query.search_value;
 
     if(typeof sortby !='undefined' && typeof sortorder !='undefined')
     {  
@@ -33,15 +34,23 @@ exports.getPage = function (req, res) {
         query.sort = temp;
     }
     
-    User.getPageRecords(query, function(err, result) {
+    var find_query = {};
+    
+    if(search_value!="")
+     find_query["$or"] = [{name: new RegExp(search_value, 'i')} , {email : new RegExp(search_value, 'i')}];
+    
+    console.log(query);
+    console.log(find_query);
+
+    User.getPageRecords(find_query,query, function(err, result) {
         
         if (!err) {
 
-            User.getAllCount({},function(err,counter){
+            User.getAllCount(find_query,function(err,counter){
 
                 var total_pages = Math.ceil(counter/size);
                 var page_list = generatePageArray(page,size,total_pages);
-                res.json({records:result,pages:page_list,current_page:page,sortby:sortby,sortorder:sortorder});
+                res.json({records:result,pages:page_list,current_page:page,sortby:sortby,sortorder:sortorder,search_value:search_value});
 
             });
             
