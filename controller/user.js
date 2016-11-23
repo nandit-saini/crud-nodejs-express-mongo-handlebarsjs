@@ -27,7 +27,7 @@ exports.getPage = function (req, res) {
     var sortorder = req.query.sort_order;
     var search_value = req.query.search_value;
 
-    if(typeof sortby !='undefined' && typeof sortorder !='undefined')
+    if((typeof sortby && sortby) && (typeof sortorder && sortorder))
     {  
         var temp = {};
         temp[sortby] = sortorder;
@@ -39,9 +39,6 @@ exports.getPage = function (req, res) {
     if(search_value!="")
      find_query["$or"] = [{name: new RegExp(search_value, 'i')} , {email : new RegExp(search_value, 'i')}];
     
-    console.log(query);
-    console.log(find_query);
-
     User.getPageRecords(find_query,query, function(err, result) {
         
         if (!err) {

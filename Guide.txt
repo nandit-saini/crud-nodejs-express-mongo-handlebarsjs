@@ -1,0 +1,36 @@
+Project - CRUD operations alongwith pagination,sorting and filtering on a collection in MongoDB using Node.js
+
+GitHub Link :- https://github.com/nandit-saini/crud-nodejs-express-mongo-handlebarsjs 
+
+
+Languages Used :-
+
+Backend 
+
+1.Node.js
+2.Express.js
+3.Mongoose
+4. Nodemon tool to restart the server automatically on some file changes
+
+Frontend
+
+1.Handlebars.js
+2.HTML,CSS,Javascript,Jquery
+3.Bootstrap
+
+
+Project Work Details
+
+1. Create,Read,Update,Delete Operations were done on a user collection in MongoDB using mongoose.
+	
+	(a). In insertion of a new User a form was created and a success or error message was displayed 
+	(b). To perform read,update and delete operations on the collection a table was made using bootstrap 	and Handlebars.js as a templating engine to separte Javascript code from the HTML code.
+
+2. Pagination and Sorting was done on the same User Collection.
+	
+	(a). In backend the pagination was implemented using skip and limit parameters of the Mongoose but this method can further be optimised since skip causes the server to fetch the whole collection and the discard some records. Instead of using skip and limit we can use find and limit in which the find method consists of ranged queries like find("_id" > last_id).limit(10) where last_id is the id of the last document in a page. This last_id needs to be updated for every page.
+
+
+	(b). In backend the sorting of the collection documents were done using sort parameter in mongoose.
+
+	
